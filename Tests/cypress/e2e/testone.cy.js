@@ -2,11 +2,11 @@
 /// <reference types="cypress"/> 
 
 //Describe é onde usamos para descrever o nosso caso de teste
-describe('Criando cenário de teste para o site globalsqa', ()=> {
+describe('Creating test scenario for globalsqa website', ()=> {
 
   //Para cada caso de teste
   //.skip na frente de it para ignorar um teste
-  it.skip('Caso de teste: Registrando um usuário no site com sucesso', () => {
+  it.skip('Test case: Registering a user on the website successfully', () => {
 
     cy.visit('https://globalsqa.com/angularJs-protractor/registration-login-example/#/login')
     cy.get('.btn-link').click() //Ao selecionar o código 'inspecionar' temos o seguinte comando cy.get e no fim adicionamos click para clicar no botão
@@ -20,7 +20,7 @@ describe('Criando cenário de teste para o site globalsqa', ()=> {
     cy.get('.ng-binding').should('contain.text', 'Registration successful') //Inspecionamos a caixa de "Registrou com sucesso", should "Deve conter um texto, pode ter outras coisas porém contem o txt..."
   })
 
-  it.skip('Caso de teste2: Registrando um usuário sem senha', () => {
+  it.skip('Test case2: Registering a user without a password', () => {
 
     cy.visit('https://globalsqa.com/angularJs-protractor/registration-login-example/#/register')
     cy.get('#firstName').type('Lucas Belino') //Selecionamos o campo de texto e type para inserir o texto
@@ -34,13 +34,24 @@ describe('Criando cenário de teste para o site globalsqa', ()=> {
     cy.get('.btn-primary').should('be.disabled') //Assertiva se está desativado
   })
 
-  it('Caso de teste3: Logando usuário com sucesso através de uma função', () => {
+  it.skip('Test case3: Successfully logging in user through a function', () => {
 
     let info = createUser() //Chamando a função através de info
     cy.get('#username').type(info[0]) //Nome
     cy.get('#password').type(info[1]) //Senha
     cy.get('.btn-primary').click()
     cy.get('h1.ng-binding').should('contain.text', info[0])
+  })
+
+  it('Test case4: Successfully delete user', () => {
+
+    let info = createUser() //Chamando a função através de info
+    cy.login(info[0], info[1])
+    cy.get('h1.ng-binding').should('contain.text', info[0])
+    cy.get('.ng-binding > a').click()
+    cy.get('.btn').click()
+    cy.login(info[0], info[1])
+    cy.get('.ng-binding').should('have.text', 'Username or password is incorrect')
   })
 
 })
